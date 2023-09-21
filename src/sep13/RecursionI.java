@@ -1,6 +1,6 @@
 package sep13;
 
-public class Recursion {
+public class RecursionI {
     public static void printNumbers(int n) {
         if(n == 6)
             return;
