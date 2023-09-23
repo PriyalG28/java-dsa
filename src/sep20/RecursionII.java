@@ -76,6 +76,42 @@ public class RecursionII {
 
     }
 
+    public static void removeDuplicates(String str, int idx, String newStr) {
+        if (idx == str.length()) {
+            System.out.println(newStr);
+            return;
+        }
+        char currChar = str.charAt(idx);
+        if (map[currChar - 'a']) {
+            removeDuplicates(str, idx + 1, newStr);
+        } else {
+            newStr += currChar;
+            map[currChar - 'a'] = true;
+            removeDuplicates(str, idx + 1, newStr);
+        }
+
+    }
+
+    public static int removeDuplicates(int[] nums) {
+
+        if (nums.length ==1) {
+            return 1;
+        }
+        if (nums.length ==2) {
+            return 2;
+        }
+        int j = 2;
+        for (int i = 2; i < nums.length; i++) {
+            if (nums[i] != nums[j - 2]) {
+                nums[j] = nums[i];
+                j++;
+            }
+        }
+
+        return j;
+
+    }
+
 
     public static void main(String[] args) {
 
@@ -87,7 +123,7 @@ public class RecursionII {
         //Time Complexity: O(2^n -1) ~ O(2^n)
 
         int n = 3;
-        String str = "axbcxxxxdxadwezxsx";
+        String str = "axbcxxxccdsxdxadwezxsx";
 
 //        towerOfHanoi(n, "S", "H", "D");
 
@@ -109,11 +145,16 @@ public class RecursionII {
 //        moveAllX(str, 0, 0, "");
 
         //Question - Remove Duplicates
+        //Time Complexity = O(n)
+//        removeDuplicates(str, 0, "");
 
+        //Print all the subsequences of a string
 
+        int[] arr = {1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 4};
 
-
-
+        int count = removeDuplicates(arr);
+        System.out.println("original length: " + arr.length);
+        System.out.println("new length: " + count);
 
     }
 }
