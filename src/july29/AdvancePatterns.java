@@ -164,21 +164,37 @@ public class AdvancePatterns {
 
         // Pascal's Triangle
 
-        int previousSum = 0;
-        for (int i = 1; i <= n; i++){
-            for (int j = 1; j <= n-i; j++){
+//        int previousSum = 0;
+//        for (int i = 1; i <= n; i++){
+//            for (int j = 1; j <= n-i; j++){
+//                System.out.print(" ");
+//            }
+//            for (int j = 1; j <= i; j++) {
+//                if (j == 1 || j == i)
+//                    System.out.print("1 ");
+//                else {
+//                    previousSum = i + j;
+//                    System.out.print(previousSum + " ");
+//                }
+//            }
+//            System.out.println();
+//        }
+//        int n = 5;
+        for (int i=1; i <= n; i++){
+            for(int j = 1; j <= i; j++){
+                System.out.print(j);
+            }
+            for(int k = 0; k < (n-i); k++){
                 System.out.print(" ");
             }
-            for (int j = 1; j <= i; j++) {
-                if (j == 1 || j == i)
-                    System.out.print("1 ");
-                else {
-                    previousSum = i + j;
-                    System.out.print(previousSum + " ");
-                }
+            for(int k = 0; k < (n-i); k++){
+                System.out.print(" ");
+            }
+            for (int l = i; l > 0; l--){
+                System.out.print(l);
             }
             System.out.println();
-        }
 
+        }
     }
 }

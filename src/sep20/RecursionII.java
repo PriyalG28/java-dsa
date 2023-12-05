@@ -107,11 +107,39 @@ public class RecursionII {
                 j++;
             }
         }
-
         return j;
+    }
+
+    public static void subsequences(String str, int idx, String newString){
+        if(idx == str.length()){
+            System.out.println(newString);
+            return;
+        }
+         char currChar = str.charAt(idx);
+         subsequences(str, idx+1, newString + currChar);
+         subsequences(str, idx+1, newString);
+
 
     }
 
+    public static int[] plusOne(int[] digits) {
+        if(digits[digits.length - 1] < 9){
+            digits[digits.length - 1] += 1;
+            return digits;
+        }
+        for (int i = digits.length - 1; i >= 0; i--){
+            if(digits[i] < 9){
+                digits[i] += 1;
+                return digits;
+            }else{
+                digits[i] = 0;
+            }
+        }
+
+        digits = new int[digits.length + 1];
+        digits[0] = 1;
+        return digits;
+    }
 
     public static void main(String[] args) {
 
@@ -123,7 +151,7 @@ public class RecursionII {
         //Time Complexity: O(2^n -1) ~ O(2^n)
 
         int n = 3;
-        String str = "axbcxxxccdsxdxadwezxsx";
+        String str = "abc";
 
 //        towerOfHanoi(n, "S", "H", "D");
 
@@ -148,13 +176,27 @@ public class RecursionII {
         //Time Complexity = O(n)
 //        removeDuplicates(str, 0, "");
 
-        //Print all the subsequences of a string
+        //Remove Duplicates(a value should not appear more than 2 times)
+        // Time Complexity- O(N)
+        // Space Complexity- O(1)
+//        int[] arr = {1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 4};
+//
+//        int count = removeDuplicates(arr);
+//        System.out.println("original length: " + arr.length);
+//        System.out.println("new length: " + count);
 
-        int[] arr = {1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 4};
 
-        int count = removeDuplicates(arr);
-        System.out.println("original length: " + arr.length);
-        System.out.println("new length: " + count);
+        //Print all subsequences of a string
+        //Total subsequences = 2^n (n = no. of chars in a string)
+        //Time Complexity: O(2^(n+1) - 1) ~ O(2^n)  
+
+        subsequences(str, 0, "");
+                int[] arr = new int[]{4,3,2,1};
+        int[] result = plusOne(arr);
+
+        for (int i = 0; i < result.length; i++){
+            System.out.println(result[i]);
+        }
 
     }
 }
