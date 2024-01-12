@@ -30,7 +30,7 @@ public class RecursionII {
         System.out.print(s.charAt(index));
     }
 
-    public static void occurence(String s, int idx, char c) {
+    public static void occurrence(String s, int idx, char c) {
         if (idx == s.length()) {
             System.out.println(first);
             System.out.println(last);
@@ -43,7 +43,7 @@ public class RecursionII {
             else
                 last = idx;
         }
-        occurence(s, idx + 1, c);
+        occurrence(s, idx + 1, c);
     }
 
     public static boolean isArraySorted(int[] arr, int idx) {
@@ -118,8 +118,6 @@ public class RecursionII {
          char currChar = str.charAt(idx);
          subsequences(str, idx+1, newString + currChar);
          subsequences(str, idx+1, newString);
-
-
     }
 
     public static int[] plusOne(int[] digits) {
@@ -161,7 +159,7 @@ public class RecursionII {
 
         //Question - Find first and last occurrence of an element in a string
         //Time Complexity - O(n)
-//        occurence(s, 0, 'a');
+//        occurrence(s, 0, 'a');
 
         //Question - Check if an array is sorted
         //Time Complexity - O(n)

@@ -28,12 +28,12 @@ public class RecursionI {
         return n * printFactorial(n-1);
     }
 
-    public static void printFibonnaci(int a, int b, int n){
+    public static void printFibonacci(int a, int b, int n){
         if (n == 0)
             return;
         int c = a + b;
         System.out.println(c);
-        printFibonnaci(b, c, n-1);
+        printFibonacci(b, c, n-1);
     }
 
     public static int xToPowOfN(int x, int n){
@@ -70,10 +70,10 @@ public class RecursionI {
 //        System.out.println(printFactorial(n));
 //        System.out.println(a);
 //        System.out.println(b);
-//        printFibonnaci(a, b, n - 2);
+//        printFibonacci(a, b, n - 2);
 //        System.out.println(xToPowOfN(0, 10));
 
-        // Question: Print x^n with stack height of logn
+        // Question: Print x^n with stack height of log n
         System.out.println(calcPower(2, 5));
     }
 
