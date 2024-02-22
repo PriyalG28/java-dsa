@@ -1,12 +1,14 @@
 package jan16;
 
 
+import java.util.Arrays;
+
 public class BinarySearchQuestions {
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 4, 5, 8, 9, 10, 11, 35, 41, 42, 46, 67, 76, 77, 78, 89, 99, 798, 7654, 34355, 53221};
-        int[] arr1 = {3, 1, 2};
-        System.out.println(findMin(arr1));
+        int[] arr1 = {3, 3, 7, 7, 10, 11, 11};
+        System.out.println(singleNonDuplicate(arr1));
     }
 
     // Ques: Find ceiling value from an array for the given target
@@ -26,6 +28,9 @@ public class BinarySearchQuestions {
         return arr[start];
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     // Ques: Find floor value from an array for the given target
     static int findFloor(int[] arr, int target) {
         int start = 0;
@@ -43,6 +48,8 @@ public class BinarySearchQuestions {
         return arr[end];
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // Ques: 744. Find Smallest Letter Greater Than Target (LC)
     static char nextGreatestLetter(char[] letters, char target) {
         int start = 0;
@@ -59,6 +66,8 @@ public class BinarySearchQuestions {
         return letters[start % letters.length];
 
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Ques: 34. Find First and Last Position of Element in Sorted Array (LC)
     static int[] searchRange(int[] nums, int target) {
@@ -94,6 +103,7 @@ public class BinarySearchQuestions {
         return ans;
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //Ques: https://www.geeksforgeeks.org/find-position-element-sorted-array-infinite-numbers/
     // Approach use: Sliding window + BS
@@ -122,6 +132,8 @@ public class BinarySearchQuestions {
         return -1;
     }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // Ques: 852. Peak Index in a Mountain Array (LC) <-> 162
     static int peakIndexInMountainArray(int[] nums) {
         int start = 0;
@@ -146,6 +158,8 @@ public class BinarySearchQuestions {
             return binarySearch(mountainArr, target, peakIndex, mountainArr.length - 1);
         }
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Ques: 33. Search in Rotated Sorted Array (Better approach to do this is recursion)
     static int searchInPivot(int[] nums, int target) {
@@ -181,7 +195,9 @@ public class BinarySearchQuestions {
         return -1;
     }
 
-    // Ques: 153. Find Minimum in Rotated Sorted Array
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ques: 153. Find Minimum in Rotated Sorted Array <-> Ques.154 (duplicate elements)
     static int findMin(int[] nums) {
 
         if (nums.length < 2) return nums[0];
@@ -194,7 +210,169 @@ public class BinarySearchQuestions {
         return Math.min(nums[0], nums[pivot + 1]);
     }
 
-    // For duplicate numbers
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    //Ques: 81. Search in Rotated Sorted Array II
+    static boolean searchInRotatedArray(int[] nums, int target) {
+        int pivot = findPivotForDuplicateNumbers(nums);
+        System.out.println(pivot);
+
+        if (pivot == -1) {
+            return binarySearchInRotatedArray(nums, target, 0, nums.length - 1);
+        }
+        if (nums[pivot] == target) return true;
+        if (nums[0] > target) {
+            if (nums.length - pivot == 2) {
+                return (nums[nums.length - 1] == target);
+            } else {
+                return binarySearchInRotatedArray(nums, target, pivot + 1, nums.length - 1);
+            }
+        } else return binarySearchInRotatedArray(nums, target, 0, pivot - 1);
+    }
+
+    static boolean binarySearchInRotatedArray(int[] nums, int target, int start, int end) {
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (target < nums[mid]) {
+                end = mid - 1;
+            } else if (target > nums[mid]) {
+                start = mid + 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // For duplicate numbers
+    static int findPivotForDuplicateNumbers(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+
+            if (start < mid && nums[mid] < nums[mid - 1]) {
+                return mid - 1;
+            } else if (mid < end && nums[mid] > nums[mid + 1]) {
+                return mid;
+            } else if (nums[mid] == nums[start]) {
+                if (nums[start] > nums[start + 1]) {
+                    return start;
+                }
+                start++;
+            } else if (nums[mid] == nums[end]) {
+                if (nums[end] < nums[end - 1]) {
+                    return end - 1;
+                }
+                end--;
+            } else if (nums[start] < nums[mid] || (nums[start] == nums[mid] && nums[end] > nums[mid])) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ques: https://www.geeksforgeeks.org/find-rotation-count-rotated-sorted-array
+    // Approach 1: Find Pivot and ans = pivot + 1;
+    // Approach 2: Find minimum in rotated array using BS
+
+    // Approach 1:
+    static int rotationCount(int[] nums) {
+        return findPivot(nums) + 1;
+    }
+
+    // Approach 2:
+    static int rotationCount2(int[] nums) {
+        return findPivot(nums) + 1;
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ques: 540. Single Element in a Sorted Array
+    // If mid is even, the single element must be on the right end else it will be in left part
+    static int singleNonDuplicate(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (mid % 2 == 1) {
+                mid--;
+            }
+            if (nums[mid] != nums[mid + 1]) {
+                end = mid;
+            } else {
+                start = mid + 2;
+            }
+
+        }
+        return nums[start];
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ques: 287. Find the Duplicate Number
+    static int findDuplicates(int[] nums) {
+        int start = 0;
+        int end = nums.length - 1;
+        int count = 0;
+        Arrays.sort(nums);
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            for (int num : nums) {
+                if (num <= mid)
+                    count++;
+            }
+            if (count > mid) {
+                end = mid;
+            } else {
+                start = mid + 1;
+            }
+        }
+        return start;
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Ques: 410. Split Array Largest Sum
+    static int splitArray(int[] nums, int k) {
+        int start = 0;
+        int end = 0;
+        for (int j : nums) {
+            start = Math.max(start, j);
+            end += j;
+        }
+        while(start < end){
+
+            //Consider mid as a potential answer
+            int mid = start + (end - start) / 2;
+
+            //Calculate the no. of pieces we can divide the array in where mid is the max sum
+            int sum = 0;
+            int pieces = 1;
+            for (int num : nums) {
+                if (sum + num > mid) {
+                    // you cannot add this in this subarray, make new one
+                    // say you add this num in new subarray, then sum = num
+                    sum = num;
+                    pieces++;
+                }else{
+                    sum += num;
+                }
+            }
+            if(pieces > k){
+                start = mid + 1;
+            }else{
+                end = mid;
+            }
+
+        }
+        return start;
+    }
 
 }
