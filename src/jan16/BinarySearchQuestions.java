@@ -357,8 +357,8 @@ public class BinarySearchQuestions {
             int pieces = 1;
             for (int num : nums) {
                 if (sum + num > mid) {
-                    // you cannot add this in this subarray, make new one
-                    // say you add this num in new subarray, then sum = num
+                    // we cannot add this in this subarray, make new one
+                    // say we add this num in new subarray, then sum = num
                     sum = num;
                     pieces++;
                 }else{
